@@ -45,6 +45,7 @@ td.r{text-align:right;font-variant-numeric:tabular-nums}
 .legend i.dot{width:12px;height:12px}
 .tagIco{background:#0D1319;border:2px solid var(--blue);color:var(--blue);font-family:'Saira Condensed';font-weight:800;font-size:12px;letter-spacing:.05em;border-radius:5px;padding:2px 6px;white-space:nowrap}
 .tagIco.eod{border-color:var(--green);color:var(--green)}
+.tagIco.thr{border-color:var(--red);color:var(--red)}
 .lio{display:flex;gap:8px;align-items:flex-start;font-size:12px;border-bottom:1px dashed var(--line);padding:7px 0;line-height:1.55}
 .lio .x{margin-left:auto;background:none;border:1px solid var(--line);border-radius:5px;color:var(--red);cursor:pointer;font-family:inherit;min-width:34px;min-height:30px}
 .src{font-size:10px;color:var(--dim)}
@@ -411,8 +412,9 @@ function drawThreat(t){
 }
 function setThreat(ll){
   if(active){clearCircles(active.circles);active.marker.remove();}
-  const marker=L.marker(ll,{icon:threatIcon,draggable:true}).addTo(map);
-  active={latlng:ll,marker,circles:[],label:'A'+(threats.length+1+(active?1:0))};
+  const label='A'+(threats.length+1);
+  const marker=L.marker(ll,{icon:tagIcon(label,'thr'),draggable:true}).addTo(map);
+  active={latlng:ll,marker,circles:[],label:label};
   marker.on('dragend',e=>{active.latlng=e.target.getLatLng();drawThreat(active);refreshCoords();});
   drawThreat(active);
   const maxR=radii().out[0].r;
